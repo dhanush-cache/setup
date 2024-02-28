@@ -19,3 +19,25 @@ class Setup:
         for folder in folders:
             if not Path(folder).exists():
                 Path(folder).mkdir()
+
+    def configure_git(self, level: str = "local", additional: dict = {}):
+        """Sets up the git configurations."""
+        configs = {
+            "user.name": "Anonymous",
+            "user.email": "anonymous@example.com",
+            "core.editor": "code --wait",
+            "core.autocrlf": self.osvalue("input", "true"),
+            "init.defaultBranch": "main",
+            "credential.helper": "store",
+            "diff.tool": "vscode",
+            "difftool.vscode.cmd": "code --wait --diff $LOCAL $REMOTE",
+            "difftool.prompt": "false",
+            "alias.pushit": "bundle create Dhanush.git --all",
+        }
+
+        for key, value in additional.items():
+            configs[key] = value
+
+        for key, value in configs.items():
+            command = ["git", "config", f"--{level}", key, value]
+            subprocess.run(command)
