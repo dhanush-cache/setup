@@ -9,7 +9,11 @@ class Setup:
 
     def __init__(self):
         self.pwd = Path().absolute()
+        self.home = Path().home()
         self.on_unix = False if platform.system() == "Windows" else True
+        self.vsdir = self.osvalue(
+            self.home / ".config/Code/User", self.home / r"AppData\Roaming\Code\User"
+        )
 
     def osvalue(self, unix, windows):
         """Return a value based on os."""
@@ -43,7 +47,7 @@ class Setup:
             command = ["git", "config", f"--{level}", key, value]
             subprocess.run(command)
 
-    def configure_vscode(self, additional: dict = {}):
+    def configure_vscode(self, universal=False, additional: dict = {}):
         """Sets up the vscode settings."""
         self.mkdir("bin", ".vscode")
 
@@ -89,4 +93,7 @@ class Setup:
             settings[key] = value
 
         settings_json = json.dumps(settings, indent=2)
-        Path(".vscode/settings.json").write_text(settings_json)
+        settings_file = (
+            self.vsdir / "settings.json" if universal else ".vscode/settings.json"
+        )
+        Path(settings_file).write_text(settings_json)
