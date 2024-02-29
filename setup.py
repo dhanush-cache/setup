@@ -97,3 +97,39 @@ class Setup:
             self.vsdir / "settings.json" if universal else ".vscode/settings.json"
         )
         Path(settings_file).write_text(settings_json)
+
+    def bindkey_vscode(self, additional: list = []):
+        """Adds vscode keybindings."""
+        keybindings = [
+            {"key": "ctrl+=", "command": "editor.action.fontZoomIn"},
+            {"key": "ctrl+-", "command": "editor.action.fontZoomOut"},
+            {
+                "key": "shift+alt+down",
+                "command": "editor.action.copyLinesDownAction",
+                "when": "editorTextFocus && !editorReadonly",
+            },
+            {
+                "key": "ctrl+alt+n",
+                "command": "runCommands",
+                "args": {
+                    "commands": ["workbench.action.positionPanelRight", "code-runner.run"]
+                },
+            },
+            {
+                "key": "ctrl+shift+m",
+                "command": "runCommands",
+                "args": {
+                    "commands": [
+                        "workbench.actions.view.problems",
+                        "workbench.action.positionPanelBottom",
+                    ]
+                },
+            },
+        ]
+
+        for keybinding in additional:
+            keybindings.append(keybinding)
+
+        keybindings_json = json.dumps(keybindings, indent=2)
+        settings_file = self.vsdir / "keybindings.json"
+        Path(settings_file).write_text(keybindings_json)
