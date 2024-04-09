@@ -64,8 +64,8 @@ class Setup:
             # Appearance.
             "workbench.colorTheme": "Dracula",
             "workbench.iconTheme": "material-icon-theme",
-            "editor.fontFamily": "JetBrainsMono Nerd Font",
-            "terminal.integrated.fontFamily": "UbuntuMono Nerd Font Mono",
+            "editor.fontFamily": "JetBrains Mono",
+            "terminal.integrated.fontFamily": "MesloLGS NF",
             "workbench.panel.defaultLocation": "right",
             "window.zoomLevel": self.osvalue(2.5, 1.2),
             "editor.fontSize": self.osvalue(20, 14),
