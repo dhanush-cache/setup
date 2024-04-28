@@ -50,9 +50,6 @@ class Setup:
         """Sets up the vscode settings."""
         self.mkdir(".vscode")
 
-        bin_file = f"$fileNameWithoutExt.{'out' if self.on_unix else 'exe'}"
-        bin_file = str(self.pwd / "bin" / bin_file)
-
         settings = {
             # Basic settings.
             "window.commandCenter": False,
@@ -69,23 +66,11 @@ class Setup:
             "window.zoomLevel": self.osvalue(2.5, 1.2),
             "editor.fontSize": self.osvalue(20, 14),
 
-            # Formatting.
-            "[python]": {"editor.defaultFormatter": "ms-python.autopep8"},
-            "pylint.args": ["--errors-only"],
-            "C_Cpp.clang_format_style": "{BasedOnStyle: Google, IndentWidth: 4}",
-            "[shellscript]": {"editor.defaultFormatter": "mkhl.shfmt"},
-            "[jsonc]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
-
             # code-runner.
             "code-runner.clearPreviousOutput": True,
             "code-runner.ignoreSelection": True,
             "code-runner.saveAllFilesBeforeRun": True,
             "code-runner.showExecutionMessage": False,
-            "code-runner.executorMap": {
-                "c": f"cd $dir && gcc $fileName -o {bin_file} && {bin_file}",
-                "cpp": f"cd $dir && g++ $fileName -o {bin_file} && {bin_file}",
-                "python": self.osvalue("python3", "python"),
-            },
         }
 
         for key, value in additional.items():
