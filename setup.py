@@ -2,6 +2,7 @@ from pathlib import Path
 import subprocess
 import platform
 import json
+import shutil
 
 
 class Setup:
@@ -24,8 +25,29 @@ class Setup:
         for folder in folders:
             Path(folder).mkdir(parents=True, exist_ok=True)
 
-    def configure_git(self, level: str = "local", additional: dict = {}):
+    def add_gitignore(self, lang: str):
+        """Writes data to the .gitignore file."""
+        import requests
+
+        url = f"https://raw.githubusercontent.com/github/gitignore/main/{lang}.gitignore"
+        response = requests.get(url)
+
+        gitignore = response.text
+        gitignore += """
+        # personal
+        .vscode
+        """
+
+        Path(".gitignore").write_text(gitignore)
+
+    def configure_git(self, level: str = "local", lang: str = "", additional: dict = {}):
         """Sets up the git configurations."""
+        if level == "local":
+            shutil.rmtree(".git", ignore_errors=True)
+            subprocess.run(["git", "init", "--initial-branch=main"])
+            if lang:
+                self.add_gitignore(lang)
+
         configs = {
             "user.name": "Anonymous",
             "user.email": "anonymous@example.com",
