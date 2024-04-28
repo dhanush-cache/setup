@@ -105,8 +105,6 @@ class Setup:
     def bindkey_vscode(self, additional: list = []):
         """Adds vscode keybindings."""
         keybindings = [
-            {"key": "ctrl+=", "command": "editor.action.fontZoomIn"},
-            {"key": "ctrl+-", "command": "editor.action.fontZoomOut"},
             {
                 "key": "shift+alt+down",
                 "command": "editor.action.copyLinesDownAction",
