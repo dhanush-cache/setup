@@ -22,8 +22,7 @@ class Setup:
     def mkdir(self, *folders):
         """Create folders in the root directory."""
         for folder in folders:
-            if not Path(folder).exists():
-                Path(folder).mkdir()
+            Path(folder).mkdir(parents=True, exist_ok=True)
 
     def configure_git(self, level: str = "local", additional: dict = {}):
         """Sets up the git configurations."""
@@ -49,7 +48,7 @@ class Setup:
 
     def configure_vscode(self, universal=False, additional: dict = {}):
         """Sets up the vscode settings."""
-        self.mkdir("bin", ".vscode")
+        self.mkdir(".vscode")
 
         bin_file = f"$fileNameWithoutExt.{'out' if self.on_unix else 'exe'}"
         bin_file = str(self.pwd / "bin" / bin_file)
