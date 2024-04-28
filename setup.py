@@ -39,8 +39,7 @@ class Setup:
             "alias.pushit": "bundle create Dhanush.git --all",
         }
 
-        for key, value in additional.items():
-            configs[key] = value
+        configs.update(additional)
 
         for key, value in configs.items():
             command = ["git", "config", f"--{level}", key, value]
@@ -73,8 +72,7 @@ class Setup:
             "code-runner.showExecutionMessage": False,
         }
 
-        for key, value in additional.items():
-            settings[key] = value
+        settings.update(additional)
 
         settings_json = json.dumps(settings, indent=2)
         settings_file = (
@@ -111,8 +109,7 @@ class Setup:
             },
         ]
 
-        for keybinding in additional:
-            keybindings.append(keybinding)
+        keybindings.extend(additional)
 
         keybindings_json = json.dumps(keybindings, indent=2)
         settings_file = self.vsdir / "keybindings.json"
