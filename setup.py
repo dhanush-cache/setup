@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import subprocess
 import platform
@@ -92,6 +93,20 @@ class Setup:
             "code-runner.ignoreSelection": True,
             "code-runner.saveAllFilesBeforeRun": True,
             "code-runner.showExecutionMessage": False,
+            "code-runner.executorMap": {
+                "python": self.osvalue("python3", "python"),
+                "c": f"cmake --build build > {os.devnull} && build/dhanush",
+                "cpp": f"cmake --build build > {os.devnull} && build/dhanush",
+                "java": f"cmake --build target > {os.devnull} && java -cp target/CMakeFiles/JavaProject.dir/ com.package.Main"
+            },
+
+            # Formatting.
+            "[python]": {"editor.defaultFormatter": "ms-python.autopep8"},
+            "C_Cpp.clang_format_style": r"{BasedOnStyle: Google, IndentWidth: 4, AllowShortFunctionsOnASingleLine: Empty}",
+            "[shellscript]": {"editor.defaultFormatter": "mkhl.shfmt"},
+            "[jsonc]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
+            "[java]": {"editor.defaultFormatter": "redhat.java"},
+            "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
         }
 
         settings.update(additional)
