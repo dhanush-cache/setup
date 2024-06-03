@@ -35,9 +35,9 @@ class Setup:
 
         gitignore = response.text
         gitignore += """
-        # personal
-        .vscode
-        """
+# personal
+.vscode
+"""
 
         Path(".gitignore").write_text(gitignore)
 
