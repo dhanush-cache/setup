@@ -107,8 +107,22 @@ class Setup:
             "[shellscript]": {"editor.defaultFormatter": "mkhl.shfmt"},
             "[jsonc]": {"editor.defaultFormatter": "esbenp.prettier-vscode"},
             "[java]": {"editor.defaultFormatter": "redhat.java"},
-            "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
         }
+        if not self.on_unix:
+            result = subprocess.run(
+                ['where', "zsh"], capture_output=True, text=True)
+            path = result.stdout.strip().split('\n')[0]
+            zshconf = {
+                "terminal.integrated.profiles.windows": {
+                    "ZSH": {
+                        "path": path
+                    }
+                },
+                "terminal.integrated.defaultProfile.windows": "ZSH"
+            }
+    
+            if path:
+                settings.update(zshconf)
 
         settings.update(additional)
 
