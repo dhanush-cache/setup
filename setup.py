@@ -30,8 +30,8 @@ class Setup:
         """Writes data to the .gitignore file."""
         import requests
 
-        url = f"https://raw.githubusercontent.com/github/gitignore/main/{
-            lang}.gitignore"
+        url = f"""https://raw.githubusercontent.com/github/gitignore/main/{
+            lang}.gitignore"""
         response = requests.get(url)
 
         gitignore = response.text
